@@ -31,7 +31,8 @@ def get_zerotier_member_addresses(token, network_id):
     members = requests.get(url, headers={
         "authorization": "token %s" % token
     }).json()
-    return [member['config']['ipAssignments'][0] for member in members]
+    return [member['config']['ipAssignments'][0] for member in members if member['config']['ipAssignments']]
+
 
 
 if __name__ == "__main__":
