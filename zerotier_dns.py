@@ -34,3 +34,19 @@ def get_zerotier_member_addresses(token, network_id):
     return [member['config']['ipAssignments'][0] for member in members]
 
 
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--zt-token", required=True, type=str)
+    ap.add_argument("--zt-net-id", required=True, type=str)
+    ap.add_argument("--cf-api-key", required=True, type=str)
+    ap.add_argument("--cf-zone-id", required=True, type=str)
+    ap.add_argument("--cf-name", required=True, type=str)
+    args = ap.parse_args()
+    addresses = get_zerotier_member_addresses(args.zt_token, args.zt_net_id)
+    put_records(
+        args.cf_api_key,
+        args.cf_zone_id,
+        args.cf_name,
+        addresses
+        )
